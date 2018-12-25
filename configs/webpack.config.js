@@ -6,13 +6,12 @@ const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const InlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
-const PROJECT_ROOT = __dirname;
+const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
-const ENVIRONMENT = process.env.ENVIRONMENT || 'development';
-const isDevelopment = ENVIRONMENT === 'development';
 
-module.exports = (env, argv) => ({
+module.exports = argv => ({
+  mode: argv.mode,
   context: PROJECT_ROOT,
   entry: './src/index.tsx',
   output: {
