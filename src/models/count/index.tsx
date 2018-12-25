@@ -1,3 +1,5 @@
+// import { Reducer } from '../../common/types';
+
 export default {
   namespace: 'count',
   state: 0,

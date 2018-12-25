@@ -15,7 +15,7 @@
     "no-empty": false,
     "no-var-requires": false,
     "array-type": false,
-    "member-ordering": [true, {
+    "member-ordering": [false, {
       "order": [
         "private-static-field",
         "protected-static-field",

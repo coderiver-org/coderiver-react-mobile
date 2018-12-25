@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'dva/router';
 import { connect } from 'dva';
-import './StatefulCount.css';
+import './index.css';
 
 const initialState = { clicksCount: 0 };
 type State = Readonly<typeof initialState>;
 
 type Props = {
   count: number;
-  children?: React.ReactNode;
   dispatch: (object: Object) => Object;
 };
 
-class World extends Component<Props, State> {
+class World extends React.Component<Props, State> {
   readonly state: State = initialState;
 
   render() {
