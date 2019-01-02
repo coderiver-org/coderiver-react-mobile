@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const InlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
@@ -20,13 +21,19 @@ module.exports = argv => ({
   },
 
   devtool: 'source-map',
-
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json', '.css'],
-  },
-
   module: {
     rules: [
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }
+        ]
+      },
       {
         test: /\.css$/,
         use: [
@@ -55,6 +62,13 @@ module.exports = argv => ({
     ],
   },
 
+  resolve: {
+    extensions: ['.js', '.jsx', '.tsx', '.ts', '.css', 'json'],
+    plugins: [
+      new TsConfigPathsPlugin(),
+    ],
+  },
+
   plugins: [
     new WebpackCleanupPlugin(),
     new HtmlWebpackPlugin({
@@ -69,7 +83,6 @@ module.exports = argv => ({
     // This plugin enables the “inlineSource” option
     new InlineSourcePlugin(),
     new webpack.HashedModuleIdsPlugin(),
-
     new webpack.DefinePlugin({
       'process.env.ENV': JSON.stringify(argv.mode),
     }),

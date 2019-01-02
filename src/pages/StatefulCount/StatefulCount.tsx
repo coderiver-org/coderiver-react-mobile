@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'dva/router';
 import { connect } from 'dva';
 import './StatefulCount.css';
+import icon from '@assets/images/react.png';
 
 const initialState = { clicksCount: 0 };
 type State = Readonly<typeof initialState>;
@@ -25,6 +26,7 @@ class World extends Component<Props, State> {
         <button onClick={this.handleDecrement.bind(this, dispatch)}>Minus</button>
         <Link to="/count">Count</Link>
         <div>{`You've clicked me ${clicksCount} times!`}</div>
+        <img src={icon} />
       </div>
     );
   }

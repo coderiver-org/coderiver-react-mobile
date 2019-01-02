@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Router, Switch } from 'dva/router';
-import Count from './pages/Count/Count';
-import StatefulCount from './pages/StatefulCount/StatefulCount';
+import Count from '@pages/Count/Count';
+import StatefulCount from '@pages/StatefulCount/StatefulCount';
 
 export default ({ history }: { history: any }) => {
   return (
