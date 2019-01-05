@@ -6,10 +6,11 @@ const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const InlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
-
+const theme = require('../package.json').theme;
 const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
+const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader';
 
 module.exports = argv => ({
   mode: argv.mode,
@@ -34,10 +35,19 @@ module.exports = argv => ({
           }
         ]
       },
+
       {
-        test: /\.module\.css$/,
+        test: /\.css$/,
         use: [
-          { loader: MiniCssExtractPlugin.loader },
+          styleLoader(argv.mode),
+          'css-loader',
+        ],
+      },
+
+      {
+        test: /\.module\.less$/,
+        use: [
+          styleLoader(argv.mode),
           {
             loader: 'css-loader',
             options: {
@@ -45,13 +55,22 @@ module.exports = argv => ({
               localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
             },
           },
+          'less-loader',
+          'postcss-loader'
         ],
       },
+
       {
-        test: /\.css$/,
-        exclude: /\.module\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.less$/,
+        use: [
+          styleLoader(argv.mode),
+          { loader: 'css-loader' },
+          { loader: 'less-loader', options: {modifyVars: theme }},
+        ],
+        exclude: /\.module\.less$/,
+        include: /node_modules/,
       },
+
       {
         exclude: /node_modules/,
         test: /\.tsx?$/,

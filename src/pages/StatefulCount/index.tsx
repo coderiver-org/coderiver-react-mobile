@@ -3,7 +3,7 @@ import { Link } from 'dva/router';
 import { connect } from 'dva';
 import { Button, WhiteSpace } from 'antd-mobile';
 import icon from '@assets/images/react.png';
-import './index.module.css';
+import './index.module.less';
 
 const initialState = { clicksCount: 0 };
 type State = Readonly<typeof initialState>;
