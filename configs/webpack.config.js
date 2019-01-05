@@ -35,7 +35,7 @@ module.exports = argv => ({
         ]
       },
       {
-        test: /\.css$/,
+        test: /\.module\.css$/,
         use: [
           { loader: MiniCssExtractPlugin.loader },
           {
@@ -47,7 +47,11 @@ module.exports = argv => ({
           },
         ],
       },
-
+      {
+        test: /\.css$/,
+        exclude: /\.module\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
       {
         exclude: /node_modules/,
         test: /\.tsx?$/,

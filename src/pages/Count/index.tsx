@@ -1,6 +1,6 @@
 import React, { SFC } from 'react';
 import { connect } from 'dva';
-import './index.css';
+import './index.module.css';
 
 type Props = {
   count: number;

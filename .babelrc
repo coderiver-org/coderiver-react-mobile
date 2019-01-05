@@ -10,6 +10,9 @@
         "@babel/preset-react"
     ],
     "plugins": [
-        "react-css-modules"
+      ["react-css-modules", {
+        "exclude": "node_modules"
+      }],
+      ["import", { "libraryName": "antd-mobile", "style": "css" }]
     ]
 }
