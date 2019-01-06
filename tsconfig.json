@@ -7,13 +7,14 @@
     "jsx": "preserve",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "outDir": "./public/",
     "baseUrl": "./src",
     "paths": {
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
       "@assets/*": ["assets/*"]
-  },
+    }
   },
   "include": [
     "./src/**/*"
