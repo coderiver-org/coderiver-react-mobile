@@ -10,14 +10,6 @@
         "@babel/preset-react"
     ],
     "plugins": [
-      ["react-css-modules", {
-        "exclude": "node_modules",
-        "filetypes": {
-          ".less": {
-            "syntax": "postcss-less"
-          }
-        },
-      }],
       ["import", {"libraryName": "antd-mobile", "style": true}]
     ]
 }
