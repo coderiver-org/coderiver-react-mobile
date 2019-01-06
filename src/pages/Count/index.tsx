@@ -1,6 +1,6 @@
 import React, { SFC } from 'react';
 import { connect } from 'dva';
-import './index.module.less';
+import style from './index.module.less';
 
 type Props = {
   count: number;
@@ -8,8 +8,8 @@ type Props = {
 };
 
 const Count: SFC<Props> = ({ count, dispatch }) => (
-  <div styleName="normal">
-    <h1 styleName="title">Dva boilerplate with typescript</h1>
+  <div className={style.normal}>
+    <h1 className={style.title}>Dva boilerplate with typescript</h1>
     <div>Count:{count}</div>
     <hr />
     <button
