@@ -108,6 +108,7 @@ module.exports = argv => ({
     new webpack.DefinePlugin({
       'process.env.ENV': JSON.stringify(argv.mode),
     }),
+    new webpack.HotModuleReplacementPlugin()
   ],
 
   optimization: {
