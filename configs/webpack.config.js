@@ -11,15 +11,13 @@ const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
 const px2rem = require('postcss-px2rem');
-const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader';
-
 
 // px2rem 添加
-const getStyleLoaders = (cssOptions, preProcessor,cssModules) => {
+const getStyleLoaders = (argv,cssOptions, preProcessor,cssModules) => {
   const loaders = [
-    require.resolve('style-loader'),
+    styleLoader(argv.mode),
     {
-      loader: require.resolve('css-loader'),
+      loader: 'css-loader',
       options: cssOptions,
     },
     {
@@ -49,6 +47,14 @@ const getStyleLoaders = (cssOptions, preProcessor,cssModules) => {
   return loaders;
 };
 
+const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader  : 'style-loader';
+
+// console.log('look:');
+// console.log(getStyleLoaders({
+//   modules: true,
+//   localIdentName: '[local]___[hash:base64:5]',
+// },'less-loader'));
+
 
 module.exports = argv => ({
   mode: argv.mode,
@@ -76,34 +82,20 @@ module.exports = argv => ({
 
       {
         test: /\.css$/,
-        use: [
-          styleLoader(argv.mode),
-          'css-loader',
-        ],
+        use:getStyleLoaders(argv,{})
       },
 
       {
         test: /\.module\.less$/,
-        use: [
-          styleLoader(argv.mode),
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[local]___[hash:base64:5]',
-            },
-          },
-          'less-loader'
-        ],
+        use: getStyleLoaders(argv,{
+            modules: true,
+            localIdentName: '[local]___[hash:base64:5]',
+          },'less-loader')
       },
 
       {
         test: /\.less$/,
-        use: [
-          styleLoader(argv.mode),
-          { loader: 'css-loader' },
-          { loader: 'less-loader', options: {modifyVars: theme }},
-        ],
+        use:getStyleLoaders(argv,{},null,{ loader: 'less-loader', options: {modifyVars: theme }}),
         exclude: /\.module\.less$/,
         include: /node_modules/,
       },

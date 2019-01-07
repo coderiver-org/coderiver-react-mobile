@@ -6,6 +6,6 @@ export interface IAppProps {}
 
 export default class Login extends Component<IAppProps, any> {
   public render() {
-    return <div className={styles.loginWrapper}>login</div>;
+    return <div className={styles.loginWrapper}>login22</div>;
   }
 }
