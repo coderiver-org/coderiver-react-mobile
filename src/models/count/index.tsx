@@ -5,7 +5,7 @@ export default {
   state: 0,
   reducers: {
     add(count: number) {
-      return count + 1;
+      return count + 2;
     },
     minus(count: number) {
       return count - 1;
