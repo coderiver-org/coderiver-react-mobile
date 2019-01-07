@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "outDir": "./public/",
     "baseUrl": "./src",
+    "experimentalDecorators": true,
     "paths": {
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],

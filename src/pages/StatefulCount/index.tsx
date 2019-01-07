@@ -4,6 +4,7 @@ import { connect } from 'dva';
 import { Button, WhiteSpace } from 'antd-mobile';
 import icon from '@assets/images/react.png';
 import style from './index.module.less';
+import { hotCom } from 'utility/hotCom';
 
 const initialState = { clicksCount: 0 };
 type State = Readonly<typeof initialState>;
@@ -13,6 +14,7 @@ type Props = {
   dispatch: (object: Object) => Object;
 };
 
+@hotCom
 class World extends React.Component<Props, State> {
   readonly state: State = initialState;
 
@@ -28,7 +30,7 @@ class World extends React.Component<Props, State> {
           </Button>
           <WhiteSpace />
           <Button type="primary" onClick={this.handleDecrement.bind(this, dispatch)}>
-            Minus
+            Minus123
           </Button>
         </div>
         <Link to="/count">Count</Link>

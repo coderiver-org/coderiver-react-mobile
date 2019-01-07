@@ -7,9 +7,13 @@
                 "useBuiltIns": "usage"
             }
         ],
+        "@babel/preset-typescript",
         "@babel/preset-react"
     ],
     "plugins": [
-      ["import", {"libraryName": "antd-mobile", "style": true}]
+      ["import", {"libraryName": "antd-mobile", "style": true}],
+      ["@babel/plugin-proposal-decorators", { "legacy": true }],
+      ["@babel/plugin-proposal-class-properties", { "loose": true }],
+      "react-hot-loader/babel",
     ]
 }
