@@ -11,6 +11,7 @@ const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
 const px2rem = require('postcss-px2rem');
+const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader  : 'style-loader';
 
 // px2rem 添加
 const getStyleLoaders = (argv,cssOptions, preProcessor,cssModules) => {
@@ -46,14 +47,6 @@ const getStyleLoaders = (argv,cssOptions, preProcessor,cssModules) => {
   }
   return loaders;
 };
-
-const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader  : 'style-loader';
-
-// console.log('look:');
-// console.log(getStyleLoaders({
-//   modules: true,
-//   localIdentName: '[local]___[hash:base64:5]',
-// },'less-loader'));
 
 
 module.exports = argv => ({
