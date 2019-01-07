@@ -4,6 +4,7 @@ const webpackDevServer = require('webpack-dev-server');
 
 const config = webpackConfig({ mode: 'development' });
 
+// 如果使用了node模块开启的服务 open参数无效
 const options = {
   hot: true,
   host: 'localhost'

@@ -10,7 +10,45 @@ const theme = require('../package.json').theme;
 const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
+const px2rem = require('postcss-px2rem');
 const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader';
+
+
+// px2rem 添加
+const getStyleLoaders = (cssOptions, preProcessor,cssModules) => {
+  const loaders = [
+    require.resolve('style-loader'),
+    {
+      loader: require.resolve('css-loader'),
+      options: cssOptions,
+    },
+    {
+      loader: require.resolve('postcss-loader'),
+      options: {
+        ident: 'postcss',
+        plugins: () => [
+          require('postcss-flexbugs-fixes'),
+          require('postcss-preset-env')({
+            autoprefixer: {
+              flexbox: 'no-2009',
+            },
+            stage: 3,
+          }),
+          px2rem({remUnit:75,exclude: /node_modules/i})
+        ],
+      },
+    },
+   
+  ];
+  if (preProcessor) {
+    loaders.push(require.resolve(preProcessor));
+  }
+   if (cssModules) {
+    loaders.push(cssModules);
+  }
+  return loaders;
+};
+
 
 module.exports = argv => ({
   mode: argv.mode,
