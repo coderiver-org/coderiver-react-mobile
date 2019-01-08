@@ -10,7 +10,7 @@ const theme = require('../package.json').theme;
 const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
-const px2rem = require('postcss-px2rem');
+const px2rem = require('postcss-px2rem-exclude');
 const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader  : 'style-loader';
 
 // px2rem 添加

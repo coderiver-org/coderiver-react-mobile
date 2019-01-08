@@ -1,11 +1,37 @@
 import React, { Component } from 'react';
+import { connect } from 'dva';
+import { Link } from 'dva/router';
 
 import styles from './index.module.less';
 
-export interface IAppProps {}
+interface ILoginProps {}
 
-export default class Login extends Component<IAppProps, any> {
+class Login extends Component<ILoginProps, any> {
   public render() {
-    return <div className={styles.loginWrapper}>login22</div>;
+    return (
+      <div className={styles.loginWrapper}>
+        <div className={styles.loginInner}>
+          <div className={styles.loginBox}>
+            <Link to="/login" className={styles.loginBtn}>
+              登录
+            </Link>
+          </div>
+          <h1 className={styles.logo} />
+          <div className={styles.title}>欢迎来到CodeRiver</div>
+          <div className={styles.gitHubBtn}>
+            <span className={styles.gitHubText}>使用Github账号登录</span>
+          </div>
+          <Link to="/nickname" className={styles.gitHubBtn + ' ' + styles.createId}>
+            创建账号
+          </Link>
+          <div className={styles.loginType}>更多登录方式</div>
+          <div className={styles.loginTypeList}>
+            <span className={styles.typeItem + ' ' + styles.sinaItem}>新浪微博</span>
+            <span className={styles.typeItem + ' ' + styles.wechatItem}>微信</span>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
+export default connect()(Login);
