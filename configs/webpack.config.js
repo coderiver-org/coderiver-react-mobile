@@ -65,7 +65,11 @@ module.exports = argv => ({
         use: [
           MiniCssExtractPlugin.loader,
           { loader: 'css-loader' },
-          { loader: 'less-loader', options: {modifyVars: theme }},
+          { loader: 'less-loader',
+          options: {
+            modifyVars: theme,
+            javascriptEnabled: true,
+           }},
         ],
         exclude: /\.module\.less$/,
         include: /node_modules/,
