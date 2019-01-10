@@ -39,7 +39,7 @@ module.exports = argv => ({
       {
         test: /\.css$/,
         use: [
-          styleLoader(argv.mode),
+          MiniCssExtractPlugin.loader,
           'css-loader',
         ],
       },
@@ -47,7 +47,8 @@ module.exports = argv => ({
       {
         test: /\.module\.less$/,
         use: [
-          styleLoader(argv.mode),
+          'css-hot-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -62,7 +63,7 @@ module.exports = argv => ({
       {
         test: /\.less$/,
         use: [
-          styleLoader(argv.mode),
+          MiniCssExtractPlugin.loader,
           { loader: 'css-loader' },
           { loader: 'less-loader', options: {modifyVars: theme }},
         ],
