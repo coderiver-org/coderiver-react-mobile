@@ -21,7 +21,7 @@ class World extends React.Component<Props, State> {
     const { count, dispatch } = this.props;
     return (
       <div className={style.normal}>
-        <h1>Count:{count}</h1>
+        <h1 className={style.title}>Count:{count}</h1>
         <div>
           <Button type="primary" onClick={this.handleIncrement.bind(this, dispatch)}>
             Add

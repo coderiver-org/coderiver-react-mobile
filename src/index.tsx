@@ -3,6 +3,11 @@ import createHistory from 'history/createBrowserHistory';
 
 const app = dva({
   history: createHistory(),
+  onHmr: () => {
+    if (module.hot) {
+      module.hot.accept();
+    }
+  },
 });
 
 import router from './router';
