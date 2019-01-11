@@ -15,7 +15,7 @@ class Welcome extends Component<IWelcomeProps, any> {
   public componentDidMount() {
     const { history } = this.props;
     setTimeout(() => {
-      history.push('/login');
+      history.push('/');
     }, 3000);
   }
   public render() {

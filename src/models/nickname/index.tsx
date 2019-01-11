@@ -1,9 +1,31 @@
-// import { Reducer } from '../../common/types';
+import { routerRedux } from 'dva/router';
 
 export default {
   namespace: 'nickname',
   state: {
-    isTrue: true,
+    isTrue: false,
+    name: '',
   },
-  reducers: {},
+  reducers: {
+    nicknameChange(state, { payload: { name } }: any) {
+      let nameLen = name.length;
+      let nowState = state.isTrue;
+      if (nameLen <= 2) {
+        nowState = false;
+      } else {
+        nowState = true;
+      }
+      return {
+        ...state,
+        name: name,
+        isTrue: nowState,
+      };
+    },
+  },
+  effects: {
+    *subNickName({ payload: { nickName } }: any, { call, put }) {
+      //coding
+      yield put(routerRedux.push('/'));
+    },
+  },
 };
