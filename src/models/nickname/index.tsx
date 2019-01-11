@@ -3,7 +3,7 @@
 export default {
   namespace: 'nickname',
   state: {
-    isTrue: false,
+    isTrue: true,
   },
   reducers: {},
 };

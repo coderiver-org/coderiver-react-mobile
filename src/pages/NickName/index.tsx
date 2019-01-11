@@ -28,7 +28,7 @@ class NickName extends Component<INickNameProps, any> {
               <span className={styles.inputTopText}>昵称</span>
             </div>
             <div className={styles.inputItem}>
-              <input className={styles.input} type="text" />{' '}
+              <input className={styles.input} type="text" placeholder="请输入昵称" />
               {nickname.isTrue ? <span className={styles.check} /> : null}
             </div>
           </div>

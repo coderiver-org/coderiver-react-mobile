@@ -9,6 +9,11 @@ import nickname from './models/nickname';
 
 const app = dva({
   history: createHistory(),
+  onHmr: () => {
+    if (module.hot) {
+      module.hot.accept();
+    }
+  },
 });
 
 app.use(createLoading());

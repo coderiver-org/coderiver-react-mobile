@@ -1,7 +1,79 @@
+@import "../../assets/css/common.less";
 .nickNameWrapper{
     height:100%;
     background:linear-gradient(#40ADAC,#42A1C1,#4498D4,#4492DD,#458BEB);
     .nickNameInner{
         padding:0 50px;
     }
+    .nickTip{
+        font-size:62px;
+        color:white;    
+        font-family:HiraginoSansGB-W3;
+        font-weight:normal;   
+        margin-top:88px;
+        margin-bottom:112px;
+    }
+    .check{
+        display: inline-block;
+        width:48px;
+        height:45px;
+        flex-shrink:0;
+        background: url('../../assets/images/check-icon.png') no-repeat;
+        background-size:100%;
+    }
+    .inputTopText{
+        font-size:30px;
+        color:white;
+    }
+    .inputItem{
+        padding:42px 0 35px 0;
+        border-bottom:2px solid white;
+        .wlflex();
+        justify-content: space-between;
+    }
+    .input{
+        background: none;
+        border:none;
+        font-size:48px;
+        color:white;
+    }
+    .btnBox{
+        text-align: right;
+        margin-top:248px;
+    }
+    .subBtn{
+        display: inline-block;
+        width:100px;
+        height:100px;
+        border-radius: 50%;
+        background:white;
+        position: relative;
+        &:before{
+            content:'';
+            position: absolute;
+            left:50%;
+            top:25px;
+            margin-left:-25px;
+            display: inline-block;
+            border-right: 4px solid @commonColor;
+            border-top: 4px solid @commonColor;
+            height: 25px;
+            width: 25px;
+            margin-top:28px;
+            transform: rotate(45deg) translate(-50%,-50%);
+        }
+    }
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: white;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+    color: white;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+    color: white;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+    color: white;
 }

@@ -11,12 +11,13 @@ const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
 const px2rem = require('postcss-px2rem-exclude');
-const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader  : 'style-loader';
+// const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader  : 'style-loader';
 
 // px2rem 添加
-const getStyleLoaders = (argv,cssOptions, preProcessor,cssModules) => {
+const getStyleLoaders = (cssOptions, preProcessor,cssModules,hotModles) => {
   const loaders = [
-    styleLoader(argv.mode),
+    // styleLoader(argv.mode),
+    MiniCssExtractPlugin.loader,
     {
       loader: 'css-loader',
       options: cssOptions,
@@ -41,6 +42,9 @@ const getStyleLoaders = (argv,cssOptions, preProcessor,cssModules) => {
   ];
   if (preProcessor) {
     loaders.push(require.resolve(preProcessor));
+  }
+  if(hotModles){
+    loaders.unshift(require.resolve(hotModles));
   }
    if (cssModules) {
     loaders.push(cssModules);
@@ -72,23 +76,22 @@ module.exports = argv => ({
           }
         ]
       },
-
       {
         test: /\.css$/,
-        use:getStyleLoaders(argv,{})
+        use:getStyleLoaders({})
       },
 
       {
         test: /\.module\.less$/,
-        use: getStyleLoaders(argv,{
+        use: getStyleLoaders({
             modules: true,
             localIdentName: '[local]___[hash:base64:5]',
-          },'less-loader')
+          },'less-loader',null,'css-hot-loader')
       },
 
       {
         test: /\.less$/,
-        use:getStyleLoaders(argv,{},null,{ loader: 'less-loader', options: {modifyVars: theme }}),
+        use:getStyleLoaders({},null,{ loader: 'less-loader', options: {modifyVars: theme,javascriptEnabled: true}}),
         exclude: /\.module\.less$/,
         include: /node_modules/,
       },
