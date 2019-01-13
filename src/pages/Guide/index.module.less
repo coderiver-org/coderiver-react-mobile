@@ -1,0 +1,95 @@
+@import "../../assets/css/common.less";
+.loginWrapper{
+   height:100%;
+   background:linear-gradient(#40ADAC,#42A1C1,#4498D4,#4492DD,#458BEB);
+   .loginInner{
+       padding:0 50px;
+   }
+   .logo{
+       display: inline-block;
+       width:156px;
+       height:100px;
+      .bg-image('../../assets/images/logo');
+      margin:0;
+      margin-top:122px;
+   }
+   .title{
+       font-size:60px;
+       color:white;
+       margin-top:109px;
+   }
+   .loginBox{
+     text-align: right;
+     padding-top:20px;
+   }
+   .loginBtn{
+        font-size:32px;
+        color:white;
+    }
+    .gitHubBtn{
+        width:100%;
+        height:100px;
+        background: white;
+        border-radius: 68px;
+        color:#40AEA8;
+        font-size:40px;
+        line-height: 100px;
+        margin-top:109px;
+    }
+    .gitHubText{
+        display: inline-block;
+        &:before{
+            content:'';
+            display: inline-block;
+            vertical-align: middle;
+            width:40px;
+            height:40px;
+            margin-bottom:4px;
+            .bg-image('../../assets/images/github');
+            margin-left:57px;
+            margin-right:43px;
+        }
+    }
+    .createId{
+        display: block;
+        margin-top:30px;
+        text-align: center;
+        background: transparent;
+        border:2px solid white;
+        color:white;
+    }
+    .loginType{
+        color:white;
+        font-size:32px;
+        margin:50px 0 70px 0;
+    }
+    .typeItem{
+        display: inline-block;
+        font-size:32px;
+        color:white;
+        &:before{
+            content:'';
+            display: inline-block;
+            vertical-align: middle;
+            margin-right:18px;
+        }
+    }
+   
+    .sinaItem{
+        margin-right:64px;
+        &:before{
+            content:'';
+            width:44px;
+            height:36px;
+            .bg-image('../../assets/images/sina');
+        }
+    }
+    .wechatItem{
+        &:before{
+            content:'';
+            width:40px;
+            height:32px;
+            .bg-image('../../assets/images/wechat');
+        }
+    }
+}

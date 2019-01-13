@@ -13,7 +13,8 @@
     "paths": {
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@util/*": ["util/*"],
     },
   },
   "include": [

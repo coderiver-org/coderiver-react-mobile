@@ -36,7 +36,7 @@ class NickName extends Component<INickNameProps, any> {
       <div className={styles.nickNameWrapper}>
         <Goback history={history} dispatch={dispatch} />
         <div className={styles.nickNameInner}>
-          <div className={styles.nickTip}>您的昵称？{isTrue}</div>
+          <div className={styles.nickTip}>您的昵称？</div>
           <div className={styles.inputBox}>
             <div className={styles.inputTop}>
               <span className={styles.inputTopText}>昵称</span>
