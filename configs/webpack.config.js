@@ -6,11 +6,11 @@ const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const InlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const theme = require('../package.json').theme;
 const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
-const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader';
 
 module.exports = argv => ({
   mode: argv.mode,
@@ -30,18 +30,15 @@ module.exports = argv => ({
           {
             loader: 'url-loader',
             options: {
-              limit: 8192
-            }
-          }
-        ]
+              limit: 8192,
+            },
+          },
+        ],
       },
 
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
 
       {
@@ -56,7 +53,7 @@ module.exports = argv => ({
               localIdentName: '[local]___[hash:base64:5]',
             },
           },
-          'less-loader'
+          'less-loader',
         ],
       },
 
@@ -65,11 +62,13 @@ module.exports = argv => ({
         use: [
           MiniCssExtractPlugin.loader,
           { loader: 'css-loader' },
-          { loader: 'less-loader',
-          options: {
-            modifyVars: theme,
-            javascriptEnabled: true,
-           }},
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: theme,
+              javascriptEnabled: true,
+            },
+          },
         ],
         exclude: /\.module\.less$/,
         include: /node_modules/,
@@ -91,9 +90,7 @@ module.exports = argv => ({
 
   resolve: {
     extensions: ['.js', '.jsx', '.tsx', '.ts', '.css', 'json'],
-    plugins: [
-      new TsConfigPathsPlugin(),
-    ],
+    plugins: [new TsConfigPathsPlugin()],
   },
 
   plugins: [
@@ -113,7 +110,13 @@ module.exports = argv => ({
     new webpack.DefinePlugin({
       'process.env.ENV': JSON.stringify(argv.mode),
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(SRC, '/assets/images/logo.png'),
+        to: path.join(PUBLIC),
+      },
+    ]),
   ],
 
   optimization: {
