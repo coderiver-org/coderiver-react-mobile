@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'dva/router';
 import { Button } from 'antd-mobile';
 import style from './index.module.less';
 import Image from '@components/Image';
@@ -9,7 +10,9 @@ import weibo from '@assets/images/welcome/weibo.png';
 
 const Welcome = () => (
   <div className={style.container}>
-    <div className={style.top}>登录</div>
+    <div className={style.top}>
+      <Link to="/login">登录</Link>
+    </div>
     <div>
       <div className={style.logo}>
         <Image src={logo} />
