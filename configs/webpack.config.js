@@ -11,6 +11,7 @@ const theme = require('../package.json').theme;
 const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
+const svgoConfig = require('./svgo-config.json');
 
 module.exports = argv => ({
   mode: argv.mode,
@@ -26,6 +27,7 @@ module.exports = argv => ({
     rules: [
       {
         test: /\.(png|jpg|gif|svg)$/i,
+        exclude: path.join(SRC, '/assets/images/icons'),
         use: [
           {
             loader: 'url-loader',
@@ -73,6 +75,23 @@ module.exports = argv => ({
         ],
         exclude: /\.module\.less$/,
         include: /node_modules/,
+      },
+
+      {
+        test: /\.svg$/,
+        include: path.join(SRC, '/assets/images/icons'),
+        loader: [
+          {
+            loader: 'svg-sprite-loader',
+            options: {
+              symbolId: 'icon-[name]'
+            }
+          },
+          {
+            loader: 'svgo-loader',
+            options: svgoConfig,
+          }
+        ]
       },
 
       {

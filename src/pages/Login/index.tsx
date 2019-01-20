@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './index.module.less';
-import back from '@assets/images/login/back.svg';
+import Icon from '@components/Icon';
 import next from '@assets/images/login/next.png';
 import { LOGIN_TYPE } from '@utils/constant';
 
@@ -44,7 +44,7 @@ class Login extends React.Component<null, State> {
     return (
       <div className={style.container}>
         <div className={style.back}>
-          <img className={style.backIcon} src={back} />
+          <Icon cla="back" style={style.backIcon} />
         </div>
         <h2 className={style.login}>登录</h2>
         {loginMethod === LOGIN_TYPE.email && (
