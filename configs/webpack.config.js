@@ -25,7 +25,7 @@ module.exports = argv => ({
   module: {
     rules: [
       {
-        test: /\.(png|jpg|gif)$/i,
+        test: /\.(png|jpg|gif|svg)$/i,
         use: [
           {
             loader: 'url-loader',
@@ -53,6 +53,7 @@ module.exports = argv => ({
               localIdentName: '[local]___[hash:base64:5]',
             },
           },
+          'postcss-loader',
           'less-loader',
         ],
       },
