@@ -7,7 +7,7 @@ interface INickNameProps {
   dispatch: (object: Object) => Object;
   history: any;
   nickname: string;
-  isTrue: boolean;
+  isNickTrue: boolean;
 }
 
 class NickName extends Component<INickNameProps, any> {
@@ -15,10 +15,10 @@ class NickName extends Component<INickNameProps, any> {
     super(props);
   }
   public sendSub = () => {
-    const { dispatch, nickname, isTrue } = this.props;
-    if (nickname === '' || isTrue === false) return;
+    const { dispatch, nickname, isNickTrue } = this.props;
+    if (nickname === '' || isNickTrue === false) return;
     dispatch({
-      type: 'nickname/subNickName',
+      type: 'registerModel/subNickName',
       payload: { nickName: nickname },
     });
   };
@@ -26,12 +26,12 @@ class NickName extends Component<INickNameProps, any> {
   public nickNameChange(e) {
     let value = e.target.value;
     this.props.dispatch({
-      type: 'nickname/nicknameChange',
+      type: 'registerModel/nicknameChange',
       payload: { name: value },
     });
   }
   public render() {
-    const { dispatch, nickname, isTrue } = this.props;
+    const { dispatch, nickname, isNickTrue } = this.props;
     return (
       <div className={styles.nickNameWrapper}>
         <Goback history={history} dispatch={dispatch} />
@@ -51,7 +51,7 @@ class NickName extends Component<INickNameProps, any> {
                 type="text"
                 placeholder="请输入昵称"
               />
-              {isTrue ? <span className={styles.check} /> : null}
+              {isNickTrue ? <span className={styles.check} /> : null}
             </div>
           </div>
           <div className={styles.btnBox} onClick={this.sendSub}>
@@ -64,8 +64,8 @@ class NickName extends Component<INickNameProps, any> {
 }
 function mapStateToProps(state) {
   return {
-    nickname: state.nickname.name,
-    isTrue: state.nickname.isTrue,
+    nickname: state.registerModel.name,
+    isNickTrue: state.registerModel.isNickTrue,
   };
 }
 

@@ -3,14 +3,22 @@ import { routerRedux } from 'dva/router';
 export default {
   namespace: 'loginModel',
   state: {
+    isMobileLogin: true,
     mobileErr: false,
     passwordErr: false,
+    mailErr: false,
     password: '',
     mobile: '',
+    mail: '',
   },
   reducers: {
     inputChange(state, payload) {
-      console.log(payload.payload);
+      return {
+        ...state,
+        ...payload.payload,
+      };
+    },
+    loginStateChange(state, payload) {
       return {
         ...state,
         ...payload.payload,
@@ -18,7 +26,7 @@ export default {
     },
   },
   effects: {
-    *subNickName({ payload: { nickName } }: any, { call, put }) {
+    *subLogin({ payload }: any, { call, put }) {
       //coding
       yield put(routerRedux.push('/'));
     },

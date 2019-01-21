@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
+import { Toast } from 'antd-mobile';
 import Goback from '@components/Goback';
 import styles from './index.module.less';
 import util from '@util/index';
@@ -12,6 +13,9 @@ interface ILoginProps {
   mobile: number;
   passwordErr: boolean;
   mobileErr: boolean;
+  mailErr: boolean;
+  mail: string;
+  isMobileLogin: boolean;
 }
 
 const initialState = { passwordStateHide: true };
@@ -22,41 +26,67 @@ class Login extends Component<ILoginProps, State> {
   public constructor(props) {
     super(props);
   }
+
   private sendSub = () => {
-    // const { dispatch, isTrue } = this.props;
-    // if (nickname === '' || isTrue === false) return;
-    // dispatch({
-    //   type: 'nickname/subNickName',
-    //   payload: { nickName: nickname },
-    // });
+    const {
+      dispatch,
+      isMobileLogin,
+      password,
+      mobile,
+      mail,
+      mailErr,
+      mobileErr,
+      passwordErr,
+    } = this.props;
+    const postParams: any = { password };
+    if (isMobileLogin) {
+      if (!mobileErr) {
+        Toast.fail('请正确填写手机号', 2);
+        return;
+      }
+      postParams.mobile = mobile;
+    } else {
+      if (!mailErr) {
+        Toast.fail('请正确填写邮箱', 2);
+        return;
+      }
+      postParams.mail = mail;
+    }
+    if (!passwordErr) {
+      Toast.fail('密码格式错误', 2);
+      return;
+    }
+    dispatch({
+      type: 'loginModel/subLogin',
+      payload: postParams,
+    });
   };
 
   private mobileChange(e) {
     const { mobileErr } = this.props;
     let value = e.target.value,
       mobileStates = mobileErr;
-    if (util.checkMobile(value)) {
-      mobileStates = true;
-    } else {
-      mobileStates = false;
-    }
+    mobileStates = util.isMobile(value) ? true : false;
     this.props.dispatch({
       type: 'loginModel/inputChange',
       payload: { mobile: value, mobileErr: mobileStates },
     });
   }
 
+  private mailChangeHandle(e) {
+    const { mailErr } = this.props;
+    let mail = e.target.value,
+      mailStates = mailErr;
+    mailStates = util.isMail(mail) ? true : false;
+    this.props.dispatch({
+      type: 'loginModel/inputChange',
+      payload: { mail: mail, mailErr: mailStates },
+    });
+  }
+
   private passwordChange(e) {
-    const { passwordErr } = this.props;
     let password = e.target.value,
-      passState = passwordErr,
-      pwdLen = password.length,
-      reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
-    if (pwdLen >= 6 && pwdLen <= 18 && reg.test(password)) {
-      passState = true;
-    } else {
-      passState = false;
-    }
+      passState = util.checkPwd(password) ? true : false;
     this.props.dispatch({
       type: 'loginModel/inputChange',
       payload: { password: password, passwordErr: passState },
@@ -65,32 +95,67 @@ class Login extends Component<ILoginProps, State> {
   private toggleHandle = () => {
     this.setState(changePasswordState);
   };
+  private changeLoginState = () => {
+    let loginState = this.props.isMobileLogin;
+    this.props.dispatch({
+      type: 'loginModel/loginStateChange',
+      payload: { isMobileLogin: !loginState },
+    });
+  };
+  private loginChangeTemplage(isMobileLogin) {
+    const { mobile, mail, mobileErr, mailErr } = this.props;
+    if (isMobileLogin) {
+      return (
+        <div className={styles.inputBox}>
+          <div className={styles.inputTop}>
+            <span className={styles.inputTopText}>手机号码</span>
+          </div>
+          <div className={styles.inputItem}>
+            <span className={styles.qh}>+49</span>
+            <input
+              onChange={e => {
+                this.mobileChange(e);
+              }}
+              value={mobile}
+              className={styles.input + ' ' + styles.mobileInput}
+              type="text"
+              placeholder="请输入手机号"
+            />
+            {mobileErr ? <span className={styles.check} /> : null}
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className={styles.inputBox}>
+          <div className={styles.inputTop}>
+            <span className={styles.inputTopText}>输入邮箱</span>
+          </div>
+          <div className={styles.inputItem}>
+            <input
+              onChange={e => {
+                this.mailChangeHandle(e);
+              }}
+              value={mail}
+              className={styles.input + ' ' + styles.mobileInput}
+              type="text"
+              placeholder="请输入邮箱"
+            />
+            {mailErr ? <span className={styles.check} /> : null}
+          </div>
+        </div>
+      );
+    }
+  }
 
   public render() {
-    const { dispatch, password, mobile, mobileErr, passwordErr } = this.props;
+    const { dispatch, password, passwordErr, isMobileLogin } = this.props;
     return (
       <div className={styles.nickNameWrapper}>
         <Goback history={history} dispatch={dispatch} />
         <div className={styles.nickNameInner}>
           <div className={styles.nickTip}>登录</div>
-          <div className={styles.inputBox}>
-            <div className={styles.inputTop}>
-              <span className={styles.inputTopText}>手机号码</span>
-            </div>
-            <div className={styles.inputItem}>
-              <span className={styles.qh}>+49</span>
-              <input
-                onChange={e => {
-                  this.mobileChange(e);
-                }}
-                value={mobile}
-                className={styles.input + ' ' + styles.mobileInput}
-                type="text"
-                placeholder="请输入手机号"
-              />
-              {mobileErr ? <span className={styles.check} /> : null}
-            </div>
-          </div>
+          {this.loginChangeTemplage(isMobileLogin)}
           <div className={styles.inputBox}>
             <div className={styles.inputTop}>
               <span className={styles.inputTopText}>输入密码</span>
@@ -113,9 +178,9 @@ class Login extends Component<ILoginProps, State> {
             </div>
           </div>
           <div className={styles.btnBox}>
-            <Link className={styles.btnComm} to="/">
-              使用邮箱
-            </Link>
+            <span className={styles.btnComm} onClick={this.changeLoginState}>
+              {isMobileLogin ? '使用邮箱' : '使用手机号码'}
+            </span>
             <span className={styles.subBtn} onClick={this.sendSub} />
           </div>
         </div>
@@ -134,6 +199,9 @@ function mapStateToProps(state) {
     password: state.loginModel.password,
     mobileErr: state.loginModel.mobileErr,
     passwordErr: state.loginModel.passwordErr,
+    mailErr: state.loginModel.mailErr,
+    mail: state.loginModel.mail,
+    isMobileLogin: state.loginModel.isMobileLogin,
   };
 }
 

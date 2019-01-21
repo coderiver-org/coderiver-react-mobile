@@ -1,0 +1,25 @@
+.am-picker{
+    background: #C7DEF6;
+    position: fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    z-index:222;
+}
+.am-picker-col-mask{
+    background-image:linear-gradient(to bottom, rgba(199, 222, 246, 0.95), rgba(199, 222, 246, 0.6)), linear-gradient(to top, rgba(199, 222, 246, 0.95), rgba(199, 222, 246, 0.6))
+}
+.am-picker-col-indicator{
+    border-top:1px solid #4490E1!important;
+    border-bottom:1px solid #4490E1!important;
+}
+.am-picker-col-item{
+    font-size:48px;
+    color:#262C2C;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+    html:not([data-scale]) .am-picker-col-indicator::before {
+        -webkit-transform-origin: 50% 100%;
+        transform-origin: 50% 100%;
+    }
+}

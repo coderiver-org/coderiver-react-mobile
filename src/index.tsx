@@ -4,7 +4,7 @@ import createLoading from 'dva-loading';
 import 'lib-flexible';
 import '@assets/css/common.css';
 import router from './router';
-import nicknameModel from './models/nickname';
+import registerModel from './models/register';
 import loginModel from './models/login';
 
 const app = dva({
@@ -21,7 +21,7 @@ app.use(createLoading());
 // 4. 注册程序路由
 app.router(router);
 
-let models = [loginModel, nicknameModel];
+let models = [loginModel, registerModel];
 
 models.forEach(m => {
   app.model(m);

@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 // plugins
@@ -11,7 +12,11 @@ const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
 const px2rem = require('postcss-px2rem-exclude');
-// const styleLoader = (mode) => mode === 'production' ? MiniCssExtractPlugin.loader  : 'style-loader';
+
+let loading = {
+  html: fs.readFileSync(path.join(__dirname, '../src/pages/Welcome/index.html')),
+  css: '<style>' + fs.readFileSync(path.join(__dirname, '../src/pages/Welcome/index.css')) + '</style>'
+}
 
 // px2rem 添加
 const getStyleLoaders = (cssOptions, preProcessor,cssModules,hotModles) => {
@@ -123,6 +128,8 @@ module.exports = argv => ({
       template: 'index.html',
       favicon: `${SRC}/assets/images/favicon.ico`,
       inlineSource: 'runtime~.+\\.js',
+      inject: true,
+      loading
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
