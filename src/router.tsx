@@ -8,7 +8,7 @@ export default ({ history }: { history: any }) => {
     <Router history={history}>
       <Switch>
         <Route path="/count" component={Count} />
-        <Route path="/" component={StatefulCount} />
+        <Route path="/" component={StatefulCount}   />
       </Switch>
     </Router>
   );
