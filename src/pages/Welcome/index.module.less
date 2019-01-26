@@ -1,3 +1,68 @@
-.container {
-  font-size: 50px;
+:global{
+  .bg{
+    height:100%;
+    background: linear-gradient(to bottom,#40AEA8,#4589EE);
+    padding: 33px 50px;
+    color: #a1d0df;
+    font-family: HiraginoSansGB-W3;
+  }
+}
+
+.logo{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: min-content;
+  height: min-content;
+}
+.co{
+  position: fixed;
+  bottom: 13px;
+}
+.sign{
+  &>div:first-child{
+    text-align: right;
+    a{
+      text-decoration: none;
+      color: #fff;
+    }
+  }
+  &>div:nth-child(2){
+    margin-top: 60px;
+  }
+  h1{
+    margin: 54px 0;
+    padding: 0;
+    font-family:"HiraginoSansGB-W3";
+    font-weight: lighter;
+  }
+  .btns{
+    &>a{
+      margin-bottom: 10px;
+      border-radius: 50px;
+      display: block;
+      height: 100px;
+      text-align: center;
+      font-size: 40px;
+      line-height: 100px;
+    }
+    &>a:first-child{
+      color: #40AEA8;
+      background: #fff;
+    }
+    &>a:last-child{
+      background: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+    }
+  }
+  &>div:last-child{
+    a{
+      margin-right: 10px;
+      font-size: 16px;
+    }
+  }
 }

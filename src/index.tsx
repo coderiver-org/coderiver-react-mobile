@@ -1,5 +1,6 @@
 import dva from 'dva';
 import createHistory from 'history/createBrowserHistory';
+import './style.less';
 
 const app = dva({
   history: createHistory(),
@@ -11,11 +12,11 @@ const app = dva({
 });
 
 import router from './router';
-import count from './models/count';
+import appModel from './models/app/app.model';
 // 4. 注册程序路由
 app.router(router);
 
-app.model(count);
+app.model(appModel);
 
 // 5. 启动项目
 app.start('#root');

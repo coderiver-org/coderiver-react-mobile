@@ -61,8 +61,8 @@
     "@types/react-dom": "^16.0.11",
     "antd-mobile": "^2.2.8",
     "dva": "^2.4.1",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1",
     "tslib": "^1.9.3"
   },
   "husky": {

@@ -63,16 +63,14 @@ module.exports = argv => ({
         use: [
           MiniCssExtractPlugin.loader,
           { loader: 'css-loader' },
-          {
-            loader: 'less-loader',
+          { loader: 'less-loader',
             options: {
+              modules:false,
               modifyVars: theme,
-              javascriptEnabled: true,
-            },
-          },
+              javascriptEnabled: true
+          }},
         ],
         exclude: /\.module\.less$/,
-        include: /node_modules/,
       },
 
       {
@@ -129,11 +127,10 @@ module.exports = argv => ({
   devServer: {
     contentBase: SRC,
     hot: true,
+    host:"0.0.0.0",
     inline: true,
     disableHostCheck: true,
-    historyApiFallback: {
-      disableDotRule: true,
-    },
+    historyApiFallback:true,
     stats: 'minimal',
     clientLogLevel: 'warning',
   },
