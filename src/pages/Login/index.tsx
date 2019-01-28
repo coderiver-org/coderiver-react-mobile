@@ -2,7 +2,7 @@ import { Button, Icon } from 'antd-mobile';
 import { Link, Redirect, Route, Switch } from 'dva/router';
 import { History } from 'history';
 import * as React from 'react';
-import { ESignMethod } from 'Util/enum';
+import { ESignMethod } from 'utils/enum';
 import styles from '../Register/index.module.less';
 import { SignItem } from '@pages/Common/SignItem';
 

@@ -1,15 +1,15 @@
-import { PickerComponent } from '@pages/Common';
+import { PickerComponent } from '@pages/Common/PickerComponent';
 import { Button, Icon } from 'antd-mobile';
 import { PickerData } from 'antd-mobile/lib/picker/PropsType';
 import { Route, Switch } from 'dva/router';
 import { History } from 'history';
 import * as React from 'react';
-import { arrayLast } from 'Util/utils';
+import { arrayLast } from 'utils/utils';
 import styles from './index.module.less';
-import { ESignMethod } from 'Util/enum';
+import { ESignMethod } from 'utils/enum';
 import { SignItem } from '@pages/Common/SignItem';
 import { Input } from '@pages/Common/Input';
-import { USER_NAME_REGEXP, PHONE_REGEXP, EMAIL_REGEXP } from 'Util/regExps';
+import { USER_NAME_REGEXP, PHONE_REGEXP, EMAIL_REGEXP, PWD_REGEXP } from 'utils/regExps';
 
 export interface IRegisterProps {
   history: History;
@@ -82,14 +82,46 @@ const InputAccount = () => (
   </SignItem>
 );
 
-const InputPassWord = () => (
-  <SignItem title="创建密码">
-    <h6>密码</h6>
-    <input type="password" />
-    <h6>确认密码</h6>
-    <input type="password" />
-  </SignItem>
-);
+const InputPassWord = () => {
+  const [pwd, setPwd] = React.useState('');
+  const [confirmPwd, setConfirmPwd] = React.useState('');
+  const [showPwd, setShowPwd] = React.useState(false);
+
+  const totalShowPwd = () => {
+    setShowPwd(!showPwd);
+  };
+
+  return (
+    <SignItem title="创建密码">
+      <h6 className="flex-btw">
+        <span>密码</span>
+        <span onClick={totalShowPwd}>{showPwd ? '隐藏' : '显示'}</span>
+      </h6>
+      <Input
+        type={showPwd ? 'text' : 'password'}
+        rule={PWD_REGEXP}
+        value={pwd}
+        onchange={e => {
+          setPwd(e.target.value);
+        }}
+      />
+      <h6 className="flex-btw">
+        <span>确认密码</span>
+        <span onClick={totalShowPwd}>{showPwd ? '隐藏' : '显示'}</span>
+      </h6>
+      <Input
+        type={showPwd ? 'text' : 'password'}
+        rule={PWD_REGEXP}
+        isALlMatch={true}
+        value={confirmPwd}
+        refValue={pwd}
+        onchange={e => {
+          setConfirmPwd(e.target.value);
+        }}
+      />
+    </SignItem>
+  );
+};
 
 const InputRole = () => {
   const data: PickerData[] = [

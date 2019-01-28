@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { TabBar } from 'antd-mobile';
 import styles from './index.module.less';
-import { Avater } from '@pages/Common';
 import avater from '@assets/Icons/头像.png';
+import { Avater } from '@pages/Common/Avater';
 
 export interface IMainProps {}
 
