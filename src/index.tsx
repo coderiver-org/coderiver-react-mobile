@@ -1,7 +1,6 @@
 import dva from 'dva';
 import createHistory from 'history/createBrowserHistory';
 import createLoading from 'dva-loading';
-import 'lib-flexible';
 import '@assets/css/common.css';
 import router from './router';
 import registerModel from './models/register';

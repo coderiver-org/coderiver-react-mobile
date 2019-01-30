@@ -38,7 +38,9 @@ class Login extends Component<ILoginProps, State> {
       mobileErr,
       passwordErr,
     } = this.props;
+
     const postParams: any = { password };
+
     if (isMobileLogin) {
       if (!mobileErr) {
         Toast.fail('请正确填写手机号', 2);
@@ -52,6 +54,7 @@ class Login extends Component<ILoginProps, State> {
       }
       postParams.mail = mail;
     }
+
     if (!passwordErr) {
       Toast.fail('密码格式错误', 2);
       return;

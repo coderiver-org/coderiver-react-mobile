@@ -7,56 +7,11 @@ const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const InlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const theme = require('../package.json').theme;
 const PROJECT_ROOT = path.join(__dirname, '../');
 const SRC = path.join(PROJECT_ROOT, '/', 'src');
 const PUBLIC = path.join(PROJECT_ROOT, '/', 'public');
-const px2rem = require('postcss-px2rem-exclude');
-
-let loading = {
-  html: fs.readFileSync(path.join(__dirname, '../src/pages/Welcome/index.html')),
-  css: '<style>' + fs.readFileSync(path.join(__dirname, '../src/pages/Welcome/index.css')) + '</style>'
-}
-
-// px2rem 添加
-const getStyleLoaders = (cssOptions, preProcessor,cssModules,hotModles) => {
-  const loaders = [
-    // styleLoader(argv.mode),
-    MiniCssExtractPlugin.loader,
-    {
-      loader: 'css-loader',
-      options: cssOptions,
-    },
-    {
-      loader: require.resolve('postcss-loader'),
-      options: {
-        ident: 'postcss',
-        plugins: () => [
-          require('postcss-flexbugs-fixes'),
-          require('postcss-preset-env')({
-            autoprefixer: {
-              flexbox: 'no-2009',
-            },
-            stage: 3,
-          }),
-          px2rem({remUnit:75,exclude: /node_modules/i})
-        ],
-      },
-    },
-   
-  ];
-  if (preProcessor) {
-    loaders.push(require.resolve(preProcessor));
-  }
-  if(hotModles){
-    loaders.unshift(require.resolve(hotModles));
-  }
-   if (cssModules) {
-    loaders.push(cssModules);
-  }
-  return loaders;
-};
-
 
 module.exports = argv => ({
   mode: argv.mode,
@@ -71,32 +26,51 @@ module.exports = argv => ({
   module: {
     rules: [
       {
-        test: /\.(png|jpg|gif)$/i,
+        test: /\.(png|jpg|gif|svg)$/i,
         use: [
           {
             loader: 'url-loader',
             options: {
-              limit: 8192
-            }
-          }
-        ]
+              limit: 8192,
+            },
+          },
+        ],
       },
       {
         test: /\.css$/,
-        use:getStyleLoaders({})
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
 
       {
         test: /\.module\.less$/,
-        use: getStyleLoaders({
-            modules: true,
-            localIdentName: '[local]___[hash:base64:5]',
-          },'less-loader',null,'css-hot-loader')
+        use: [
+          'css-hot-loader',
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[local]___[hash:base64:5]',
+            },
+          },
+          'postcss-loader',
+          'less-loader',
+        ],
       },
 
       {
         test: /\.less$/,
-        use:getStyleLoaders({},null,{ loader: 'less-loader', options: {modifyVars: theme,javascriptEnabled: true}}),
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader' },
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: theme,
+              javascriptEnabled: true,
+            },
+          },
+        ],
         exclude: /\.module\.less$/,
         include: /node_modules/,
       },
@@ -117,9 +91,7 @@ module.exports = argv => ({
 
   resolve: {
     extensions: ['.js', '.jsx', '.tsx', '.ts', '.css', 'json'],
-    plugins: [
-      new TsConfigPathsPlugin(),
-    ],
+    plugins: [new TsConfigPathsPlugin()],
   },
 
   plugins: [
@@ -129,7 +101,6 @@ module.exports = argv => ({
       favicon: `${SRC}/assets/images/favicon.ico`,
       inlineSource: 'runtime~.+\\.js',
       inject: true,
-      loading
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
@@ -141,7 +112,13 @@ module.exports = argv => ({
     new webpack.DefinePlugin({
       'process.env.ENV': JSON.stringify(argv.mode),
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(SRC, '/assets/images/logo.png'),
+        to: path.join(PUBLIC),
+      },
+    ]),
   ],
 
   optimization: {
