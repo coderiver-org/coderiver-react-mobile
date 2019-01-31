@@ -5,6 +5,8 @@
     "tslint-config-prettier"
   ],
   "rules": {
+    "variable-name": false,
+    "trailing-comma": false,
     "no-constant-condition": true,
     "quotemark": [true, "single", "avoid-escape", "jsx-double"],
     "no-console": false,

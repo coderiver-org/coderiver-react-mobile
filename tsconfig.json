@@ -3,8 +3,9 @@
     "sourceMap": true,
     "importHelpers": true,
     "noImplicitAny": false,
-    "module": "es2015",
+    "module": "commonjs",
     "jsx": "preserve",
+    "target": "es2017",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -13,7 +14,8 @@
     "paths": {
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@common/*": ["common/*"]
     }
   },
   "include": [
